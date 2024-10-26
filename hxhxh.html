@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imageboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1a1a1a;
+            color: #fff;
+            margin: 0;
+            padding: 20px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        #upload-section, #search-section, #image-gallery {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #333;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ff9800;
+            background-color: #444;
+            color: #fff;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #ff9800;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #e68900;
+        }
+        #images {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .image-item {
+            margin: 10px;
+            border: 1px solid #ff9800;
+            border-radius: 5px;
+            overflow: hidden;
+            width: calc(33% - 20px);
+            background-color: #222;
+        }
+        .image-item img {
+            width: 100%;
+        }
+        .image-item p {
+            padding: 5px;
+            color: #ff9800;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Imageboard</h1>
+    </header>
+    <main>
+        <section id="upload-section">
+            <h2>Add an Image</h2>
+            <input type="text" id="image-url" placeholder="Image URL" />
+            <input type="text" id="image-tags" placeholder="Tags (comma separated)" />
+            <button id="add-image">Add Image</button>
+        </section>
+
+        <section id="search-section">
+            <h2>Search Images</h2>
+            <input type="text" id="search-bar" placeholder="Search by tags" />
+        </section>
+
+        <section id="image-gallery">
+            <h2>Image Gallery</h2>
+            <div id="images"></div>
+        </section>
+    </main>
+    <script>
+        const webhookUrl = "https://discord.com/api/webhooks/1299515338031104030/wclaUf8YkY4v2OtsshYcAn2fbxbtPP-1GzZX96G-csYxue4pTZ0oCH1j2xHzmpOYMHnS";
+        const images = [];
+
+        // Display the predefined images (can be empty initially)
+        displayImages(images);
+
+        document.getElementById('add-image').addEventListener('click', function() {
+            const url = document.getElementById('image-url').value;
+            const tagsInput = document.getElementById('image-tags').value;
+            const tags = tagsInput.split(',').map(tag => tag.trim());
+
+            if (url && tags.length > 0) {
+                // Send image to Discord via webhook
+                sendToDiscord(url, tags);
+                images.push({ url, tags });
+                displayImages(images);
+                document.getElementById('image-url').value = '';
+                document.getElementById('image-tags').value = '';
+            } else {
+                alert('Please provide an image URL and at least one tag.');
+            }
+        });
+
+        document.getElementById('search-bar').addEventListener('input', function() {
+            const searchQuery = this.value.toLowerCase();
+            const filteredImages = images.filter(image =>
+                image.tags.some(tag => tag.toLowerCase().includes(searchQuery))
+            );
+            displayImages(filteredImages);
+        });
+
+        function displayImages(images) {
+            const imagesContainer = document.getElementById('images');
+            imagesContainer.innerHTML = '';
+
+            images.forEach(image => {
+                const imageItem = document.createElement('div');
+                imageItem.className = 'image-item';
+                imageItem.innerHTML = `
+                    <img src="${image.url}" alt="Image" />
+                    <p>Tags: ${image.tags.join(', ')}</p>
+                `;
+                imagesContainer.appendChild(imageItem);
+            });
+        }
+
+        function sendToDiscord(url, tags) {
+            const message = {
+                content: `New image added!\nURL: ${url}\nTags: ${tags.join(', ')}`
+            };
+
+            fetch(webhookUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(message)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to send message to Discord');
+                }
+            })
+            .catch(error => console.error(error));
+        }
+    </script>
+</body>
+</html>
