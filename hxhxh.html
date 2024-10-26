@@ -8,10 +8,10 @@
     <style>
         /* Main Body Styles */
         body {
-            background-color: #ffffe0; /* Light yellow for nostalgia */
+            background-color: #ffffe0;
             font-family: 'Comic Sans MS', cursive, sans-serif;
             text-align: center;
-            overflow: hidden; /* Keeps windows in view */
+            overflow: hidden;
         }
         .flashing-text {
             font-size: 2em;
@@ -35,7 +35,6 @@
             position: absolute;
             padding: 10px;
             box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
-            animation: float 3s ease-in-out infinite;
         }
         .title-bar {
             display: flex;
@@ -68,27 +67,27 @@
         }
         .download-button {
             background-color: #ff69b4;
-            animation: pulse 1s infinite alternate;
+            animation: pulse 1s infinite alternate, jiggle 0.5s infinite alternate;
         }
+        /* Ad Banners */
+        .ad-banner {
+            position: fixed;
+            width: 120px;
+            height: 600px;
+            background-color: #dddddd;
+            color: #333333;
+            text-align: center;
+            padding: 10px;
+            font-size: 1em;
+            line-height: 1.4em;
+        }
+        .ad-left { left: 0; top: 50%; transform: translateY(-50%); }
+        .ad-right { right: 0; top: 50%; transform: translateY(-50%); }
         /* Animations */
-        @keyframes flash {
-            from { color: #ff0000; }
-            to { color: #ffff00; }
-        }
-        @keyframes float {
-            0% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0); }
-        }
-        @keyframes bounce {
-            0% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
-            100% { transform: translateY(0); }
-        }
-        @keyframes pulse {
-            0% { background-color: #ff69b4; }
-            100% { background-color: #ff1493; }
-        }
+        @keyframes flash { from { color: #ff0000; } to { color: #ffff00; } }
+        @keyframes bounce { 0% { transform: translateY(0); } 50% { transform: translateY(-5px); } 100% { transform: translateY(0); } }
+        @keyframes pulse { 0% { background-color: #ff69b4; } 100% { background-color: #ff1493; } }
+        @keyframes jiggle { 0% { transform: rotate(-5deg); } 100% { transform: rotate(5deg); } }
     </style>
 </head>
 <body>
@@ -102,38 +101,41 @@
     <h1 class="flashing-text">Get Melody.jp Now!</h1>
 
     <!-- Feature Windows -->
-    <div class="popup-window" style="top: 20px; left: 20px;">
-        <div class="title-bar">
-            <span>Feature</span>
-            <span class="close-button" onclick="this.parentElement.parentElement.style.display='none';">x</span>
-        </div>
-        <p>Aimbot - Unstoppable Accuracy!</p>
-    </div>
-    <div class="popup-window" style="top: 200px; left: 100px;">
-        <div class="title-bar">
-            <span>Feature</span>
-            <span class="close-button" onclick="this.parentElement.parentElement.style.display='none';">x</span>
-        </div>
-        <p>ESP - See Through Walls!</p>
-    </div>
-    <div class="popup-window" style="top: 300px; left: 300px;">
-        <div class="title-bar">
-            <span>Feature</span>
-            <span class="close-button" onclick="this.parentElement.parentElement.style.display='none';">x</span>
-        </div>
-        <p>Fly Mode - Defy Gravity!</p>
-    </div>
-    <div class="popup-window" style="top: 150px; left: 400px;">
-        <div class="title-bar">
-            <span>Feature</span>
-            <span class="close-button" onclick="this.parentElement.parentElement.style.display='none';">x</span>
-        </div>
-        <p>Auto-clicker - PvP King!</p>
-    </div>
+    <div class="popup-window" style="top: 50px; left: 100px;"> <div class="title-bar"> <span>Feature</span> <span class="close-button" onclick="this.parentElement.parentElement.style.display='none';">x</span> </div> <p>Aimbot - Unstoppable Accuracy!</p> </div>
+    <div class="popup-window" style="top: 200px; left: 300px;"> <div class="title-bar"> <span>Feature</span> <span class="close-button" onclick="this.parentElement.parentElement.style.display='none';">x</span> </div> <p>ESP - See Through Walls!</p> </div>
+    <div class="popup-window" style="top: 300px; left: 500px;"> <div class="title-bar"> <span>Feature</span> <span class="close-button" onclick="this.parentElement.parentElement.style.display='none';">x</span> </div> <p>Fly Mode - Defy Gravity!</p> </div>
+    <div class="popup-window" style="top: 150px; left: 700px;"> <div class="title-bar"> <span>Feature</span> <span class="close-button" onclick="this.parentElement.parentElement.style.display='none';">x</span> </div> <p>Auto-clicker - PvP King!</p> </div>
 
     <!-- Call-to-Action Buttons -->
     <a href="https://github.com/" class="button github-button">GitHub</a>
     <a href="https://discord.com/api/webhooks/1299515338031104030/wclaUf8YkY4v2OtsshYcAn2fbxbtPP-1GzZX96G-csYxue4pTZ0oCH1j2xHzmpOYMHnS" class="button download-button">Download Melody.jp</a>
+
+    <!-- Ad Banners -->
+    <div class="ad-banner ad-left">🔷 Google Ad - Ad Banner Slot 🔷</div>
+    <div class="ad-banner ad-right">🔷 Google Ad - Ad Banner Slot 🔷</div>
+
+    <script>
+        // JavaScript to make pop-ups bounce around
+        const windows = document.querySelectorAll('.popup-window');
+        windows.forEach(window => {
+            let xDirection = (Math.random() * 2 - 1) * 2;
+            let yDirection = (Math.random() * 2 - 1) * 2;
+            setInterval(() => {
+                const rect = window.getBoundingClientRect();
+                const maxX = window.innerWidth - rect.width;
+                const maxY = window.innerHeight - rect.height;
+
+                let x = rect.x + xDirection;
+                let y = rect.y + yDirection;
+
+                if (x <= 0 || x >= maxX) xDirection *= -1;
+                if (y <= 0 || y >= maxY) yDirection *= -1;
+
+                window.style.left = x + 'px';
+                window.style.top = y + 'px';
+            }, 20);
+        });
+    </script>
 
 </body>
 </html>
