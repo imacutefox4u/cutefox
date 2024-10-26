@@ -110,7 +110,7 @@
             setInterval(() => {
                 const rect = window.getBoundingClientRect();
                 const maxX = window.innerWidth - rect.width;
-                const maxY = window.innerHeight - rect.height;
+                const maxY = 1200; // Set bounce boundary at 1200px down
 
                 let x = rect.x + xDirection;
                 let y = rect.y + yDirection;
