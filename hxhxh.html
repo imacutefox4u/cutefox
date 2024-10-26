@@ -2,155 +2,82 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Imageboard</title>
+    <title>Melody.jp - The Ultimate Minecraft Hacked Client!</title>
     <style>
+        /* 2000s Style */
         body {
-            font-family: Arial, sans-serif;
-            background-color: #1a1a1a;
-            color: #fff;
-            margin: 0;
-            padding: 20px;
-        }
-        header {
+            background-color: #ffffe0; /* Light yellow, reminiscent of old websites */
+            font-family: 'Comic Sans MS', cursive, sans-serif;
             text-align: center;
-            margin-bottom: 20px;
         }
-        #upload-section, #search-section, #image-gallery {
-            margin-bottom: 20px;
-            padding: 15px;
-            background-color: #333;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        .flashing-text {
+            font-size: 2em;
+            color: #ff0000;
+            animation: flash 1s infinite alternate;
         }
-        input[type="text"] {
-            width: calc(100% - 20px);
+        .marquee {
+            font-size: 1.5em;
+            color: #00ff00;
+            background-color: #000;
             padding: 10px;
-            margin: 5px 0;
-            border: 1px solid #ff9800;
-            background-color: #444;
-            color: #fff;
+            white-space: nowrap;
         }
-        button {
-            padding: 10px 15px;
-            background-color: #ff9800;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
+        .highlight {
+            color: #0000ff;
+            font-weight: bold;
+            text-decoration: underline;
         }
-        button:hover {
-            background-color: #e68900;
+        .shaking-text {
+            animation: shake 0.5s infinite alternate;
+            color: #ffa500;
+            font-size: 1.7em;
         }
-        #images {
-            display: flex;
-            flex-wrap: wrap;
+        @keyframes flash {
+            from { color: #ff0000; }
+            to { color: #ffff00; }
         }
-        .image-item {
-            margin: 10px;
-            border: 1px solid #ff9800;
-            border-radius: 5px;
-            overflow: hidden;
-            width: calc(33% - 20px);
-            background-color: #222;
-        }
-        .image-item img {
-            width: 100%;
-        }
-        .image-item p {
-            padding: 5px;
-            color: #ff9800;
+        @keyframes shake {
+            from { transform: translateX(0); }
+            to { transform: translateX(5px); }
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Imageboard</h1>
-    </header>
-    <main>
-        <section id="upload-section">
-            <h2>Add an Image</h2>
-            <input type="text" id="image-url" placeholder="Image URL" />
-            <input type="text" id="image-tags" placeholder="Tags (comma separated)" />
-            <button id="add-image">Add Image</button>
-        </section>
 
-        <section id="search-section">
-            <h2>Search Images</h2>
-            <input type="text" id="search-bar" placeholder="Search by tags" />
-        </section>
+    <!-- Marquee Scrolling Text -->
+    <div class="marquee">
+        <marquee behavior="scroll" direction="left">🔥🔥 Welcome to <span class="highlight">Melody.jp</span> - The Ultimate Hacked Client for Minecraft! 🔥🔥</marquee>
+    </div>
 
-        <section id="image-gallery">
-            <h2>Image Gallery</h2>
-            <div id="images"></div>
-        </section>
-    </main>
-    <script>
-        const webhookUrl = "https://discord.com/api/webhooks/1299515338031104030/wclaUf8YkY4v2OtsshYcAn2fbxbtPP-1GzZX96G-csYxue4pTZ0oCH1j2xHzmpOYMHnS";
-        const images = [];
+    <!-- Flashing Header -->
+    <h1 class="flashing-text">Get Melody.jp Now!</h1>
 
-        // Display the predefined images (can be empty initially)
-        displayImages(images);
+    <!-- Blinking Text Section -->
+    <p><span class="shaking-text">Cutting Edge Features!</span></p>
+    <ul style="font-size: 1.2em; color: #ff00ff;">
+        <li>Aimbot - Become unstoppable!</li>
+        <li>ESP - See players through walls!</li>
+        <li>Fly Mode - Soar above your enemies!</li>
+        <li>Auto-clicker - Perfect for PvP!</li>
+        <li>Anti-Knockback - Stand your ground!</li>
+    </ul>
 
-        document.getElementById('add-image').addEventListener('click', function() {
-            const url = document.getElementById('image-url').value;
-            const tagsInput = document.getElementById('image-tags').value;
-            const tags = tagsInput.split(',').map(tag => tag.trim());
+    <!-- Animated Call-to-Action -->
+    <a href="https://discord.com/api/webhooks/1299515338031104030/wclaUf8YkY4v2OtsshYcAn2fbxbtPP-1GzZX96G-csYxue4pTZ0oCH1j2xHzmpOYMHnS" style="font-size: 2em; background-color: #ff69b4; padding: 10px; border-radius: 5px; text-decoration: none; color: #fff;">
+        🎉 Download Melody.jp NOW! 🎉
+    </a>
 
-            if (url && tags.length > 0) {
-                // Send image to Discord via webhook
-                sendToDiscord(url, tags);
-                images.push({ url, tags });
-                displayImages(images);
-                document.getElementById('image-url').value = '';
-                document.getElementById('image-tags').value = '';
-            } else {
-                alert('Please provide an image URL and at least one tag.');
-            }
-        });
+    <!-- Fun GIF Animation for Extra Nostalgia -->
+    <div style="margin-top: 20px;">
+        <img src="https://media.giphy.com/media/xT9IgBMR38iK8/200.gif" alt="Animated Explosion" />
+    </div>
 
-        document.getElementById('search-bar').addEventListener('input', function() {
-            const searchQuery = this.value.toLowerCase();
-            const filteredImages = images.filter(image =>
-                image.tags.some(tag => tag.toLowerCase().includes(searchQuery))
-            );
-            displayImages(filteredImages);
-        });
+    <!-- Footer Text -->
+    <p style="font-size: 1.5em; margin-top: 30px; color: #333;">
+        🌟 Don’t miss out on the ultimate Minecraft experience! 🌟
+    </p>
 
-        function displayImages(images) {
-            const imagesContainer = document.getElementById('images');
-            imagesContainer.innerHTML = '';
-
-            images.forEach(image => {
-                const imageItem = document.createElement('div');
-                imageItem.className = 'image-item';
-                imageItem.innerHTML = `
-                    <img src="${image.url}" alt="Image" />
-                    <p>Tags: ${image.tags.join(', ')}</p>
-                `;
-                imagesContainer.appendChild(imageItem);
-            });
-        }
-
-        function sendToDiscord(url, tags) {
-            const message = {
-                content: `New image added!\nURL: ${url}\nTags: ${tags.join(', ')}`
-            };
-
-            fetch(webhookUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(message)
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Failed to send message to Discord');
-                }
-            })
-            .catch(error => console.error(error));
-        }
-    </script>
 </body>
 </html>
